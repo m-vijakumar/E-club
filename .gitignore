@@ -1,5 +1,3 @@
-"sendgrid.env" 
-"sendgrid.env" 
+.env
 
 node_modules
-.env
