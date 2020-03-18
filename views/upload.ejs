@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Update Videos Linkes</h1>
+    <form method="post" action="">
+        video1:<input type="text" name="video1">
+        video2:<input type="text" name="video1">
+    </form>
+
+    <h1>Update Events</h1>
+    <form method="post" action="">
+        EventTitle:<input type="text" name="video1">
+        EventDescription:<input type="text" name="video1">
+        EventDate:<input type="date" name="video1">
+    </form>
+
+    <% for(var i=0; i <events.length ; i++) { %>
+        <%= events[i] %><br>
+        <form action="/api/admin/update/delete/event" method="post">
+            <input type="hidden" name="eventId" value="<%= events[i]._id %>" />
+            <input type="submit" value="delete" />
+        </form>
+    <%}%>
+
+
+    <h1>Update Photos</h1>
+    <form method="post" action="/api/admin/update/photos" enctype="multipart/form-data">
+        <input type="file" name="image" >
+        <input type="submit" value="ADDPhoto" />
+    </form>
+
+    <!-- JSON.stringify(photos).length -->
+    <% for(var i=0; i <photos.length ; i++) { %>
+        <!-- JSON.parse(photos) -->
+        <!-- <%= photos[i].path %> -->
+        
+        <img src="\myuploads\<%= photos[i].path %>" height="30%" width="30%"/>
+        <form action="/api/admin/update/delete/photo" method="post">
+            <input type="hidden" name="imageName" value="<%= photos[i].path %>" />
+            <input type="submit" value="delete" />
+        </form>
+        <%}%>
+
+    
+</body>
+</html>

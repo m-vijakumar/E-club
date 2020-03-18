@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.cen{
+			margin-top: 5%;
+			margin-left: 28%;
+			margin-right:  28%;
+			margin-bottom: 10%;
+			font-size: 25px;
+			background-color:#EB8171 ;
+			
+		}
+		p{
+			color: blue;
+		}
+
+	</style>
+</head>
+<body>
+	
+	<div  class="cen">
+
+        <h3 align="center" >Admin Registration Form</h3>
+        
+	<form method="post" action="/api/admin/auth/register">
+        <table align="center" >
+            <tr>
+                <td>Email   : </td><td><input type="text" name="username" /></td>
+            </tr>
+    
+            <tr>
+                <td>password : </td><td><input type="password" name="password" /></td>
+            </tr>
+            <tr >
+    
+                <td colspan="2" align="center"><br><input type="submit" name="submit" />     &nbsp;&nbsp;&nbsp;   <input type="submit" name="submit"  value="  reset  " /></td>
+            </tr>
+            <tr >
+                <td colspan="2" align="center" textalign="center"><br><p >NewUser?<a  href="#">SignUp</a></p></td>
+            </tr>
+        </table>
+    </form>
+	</div>
+	
+	<br> 
+</body>
+</html>
