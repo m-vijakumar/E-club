@@ -1,11 +1,295 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Home Page E-Club</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/baec0ddc1f.js" crossorigin="anonymous"></script>
+	<link rel="shortcut icon" type="img/png" href="asset\logos\logo_only.png">
+	<link rel="stylesheet" type="text/css" href="css\style.css">
+	<script src="js/main.js"></script>
 </head>
 <body>
-    
+	<header id= "header" >
+		<a href="/" class="logo">E-Club</a>
+		<ul>
+			<li><a href="/" class="active" onclick="toggle()">HOME</a></li>
+			<li><a href="/#about" onclick="toggle()">About</a></li>
+			<li><a href="/#events" onclick="toggle()">Events</a></li>
+			<li><a href="/imagegallery" onclick="toggle()">Gallery</a></li>
+			<li><a href="#portfolio" onclick="toggle()">Portfolio</a></li>
+			<li><a href="/team" onclick="toggle()">Team</a></li>
+			<li><a href="#contact" onclick="toggle()">Contact Us</a></li>
+		</ul>
+		<div class="toggle" onclick="toggle()"></div>
+	</header>
+	<!-- <nav id="header" class="navbar navbar-expand-lg  navbar-dark " >
+		<a href="index.html" class="logo">E-Club</a>
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item ">
+				<a class="nav-link" href="/"> Home <span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item ">
+				<a class="nav-link" href="/"> Home <span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item ">
+				<a class="nav-link" href="/"> Home <span class="sr-only">(current)</span></a>
+			</li>
+		  	<li class="nav-item ">
+				<a class="nav-link" href="/login"> Login <span class="sr-only">(current)</span></a>
+			</li> 
+		  
+		</ul>
+	</nav> -->
+
+	<section id ="home">
+		<div>
+			<!-- <h2>Wider imagination is what the world needs!</h2> -->
+
+			<h2>Our Vision</h2>
+      	<p style="font-size: 24px">To build an active, thriving, entrepreneurial ecosystem on the campus.</p>
+      	<h2>Our Mission</h2>
+      	<p style="font-size: 24px">To co-create activities where every student can actively participate in any club of their choice and contributing to a self-sustaining entrepreneurial ecosystem.</p>
+
+      	<blockquote >
+      		<p>Think big,Start small,Learn fast!</p><br>
+      		<cite>-Eric Ries</cite>
+      	</blockquote>
+			
+		</div>
+		<img src="asset\logos\transeclublogo.png">
+	</section>
+
+	<section id ="about">
+		<div>
+			<h2>About Us</h2>
+			<h3>Our Approach</h3>
+			<p>At E-Club under the aegis of VDC we support and encourage individual ability and creativity of budding entrepreneurs keeping in view the integrity,sustainability and growth of our society.</p>
+			<p>As part of building this entrepreneurial ecosystem, E-club under the guidance of the Venture Development Centre  aims at covering  promising and student friendly programs.As part of this process, the Venture Development Centre (VDC) in partnership with Northeastern University, Boston, to roll-out their flagship NU-IDEA program in Entrepreneurship. </p>
+			<p>The versatile experience of our  <a href="https://vdc.gitam.edu/#team"><span style="color: white">Mentors</span></a> in the domain provides wide insights on how Entrepreneurship influences the potential contribution to the economic growth & prosperity of a country and how this phenomenon can lead to successful economic growth.</p>
+			<a href="about.html"><span><h3 style="color: white">How do we do it?</h3></span></a>
+
+		</div>
+			<video controls >
+                <source src="asset\videos\eclub-video1.mp4" type="video/mp4">
+             </video>
+	</section>
+
+	<section id ="events"  class="container-fluid ">
+		<div class="container-fluid">
+			<h2 style="padding: 20px;">E-Club Events</h2>
+
+			<div class=" row  justify-content-between">
+				
+				<div class="col-md-6 col-sm-12 col-xs-12">	
+			  			<h3>Future Events</h3>
+			  			<ul class="future">
+							<% if(futureEvents){%>
+							<% for(var i=0; i <futureEvents.length ; i++) { %>
+							<li>
+							<div class="event-future">
+								<h6 style="text-align: right;padding-right: 10%;font: bold;"><%= futureEvents[i].eventDate %></h6>
+								<h5 style="padding-left: 5%;"><%= futureEvents[i].eventTitle %></h5>
+								<p style="padding-left: 1%;"><%= futureEvents[i].eventDescription %></p>
+							</div>
+							</li>
+							<%} }%>
+			  			</ul>
+					</div>
+
+				<div class="col-md-6 col-sm-12 col-xs-12">
+					<h3>Past Events</h3>
+					<ul class="past">
+						<% if(pastEvents){%>
+						<% for(var i=0; i <pastEvents.length ; i++) { %>
+						<li>
+							<div class="event-past">
+								<h6 style="text-align: right;padding-right: 10%;font: bold;"><%= pastEvents[i].eventDate %></h6>
+								<h5 style="padding-left: 5%;"><%= pastEvents[i].eventTitle %></h5>
+								<p style="padding-left: 1%;"><%= pastEvents[i].eventDescription %></p>
+								
+							</div>
+						</li>			
+						<%} }%>					
+					</ul>
+				</div>	
+				
+			  </div>
+			  
+		</div>	
+		
+	</section>
+
+	<section id ="portfolio">
+		<div>
+			<!-- <h2>Portfolio</h2>
+			<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p> -->
+			<div class="services">
+				<h1>Our Portfolios</h1>
+				<div class="cen">
+					<div class="service">
+						<a href="portfolios.html"><img src="asset\portfolio-icons\favicon-32x32.png" style="padding-bottom: 32px">
+						</a>
+						<h3>Speaker Series</h3>
+						<p>An prominent personality is invited to speak and share his or her professional or life experiences and inspire members of the campus community.
+
+</p>
+					</div>
+
+
+					<div class="service">
+						<a href=""><img src="asset\portfolio-icons\workshop-32x32.png" style="padding-bottom: 32px"></a>
+						<h3>Workshop & Bootcamp</h3>
+						<p> A series of workshops and boot camps on topics of entrepreneurship are conducted for general education and awareness among students, alumni, faculty and staff.</p>
+					</div>
+
+					<div class="service">
+						<a href=""><img src="asset\portfolio-icons\chai-32x32.png" style="padding-bottom: 32px"></a>
+						<h3>Chai-Chats</h3>
+						<p>Periodic informal events to meet like-minded people interested in common topics, such as,Entrepreneurship , technology, food, sports, etc.</p>
+					</div>
+
+					<div class="service">
+						<a href=""><i class="fas fa-universal-access"></i></a>
+						<h3>MySOIL</h3>
+						<p>Societal Outreach for Individual Learning.</p>
+					</div>
+
+					<div class="service">
+						<a href=""><i class="fas fa-venus"></i></a>
+						<h3>WISE</h3>
+						<p>Women Initiated Social Entrepreneurship.</p>
+					</div>
+
+					<div class="service">
+						<a href=""><i class="fas fa-user-graduate"></i></a>
+						<h3>FUEL</h3>
+						<p>FUture Entrepreneurs and Leaders.</p>
+					</div>
+
+					<div class="service">
+						<a href=""><img src="asset\portfolio-icons\idea-32x32.png" style="padding-bottom: 32px"></a>
+						<h3>SmartIDEA</h3>
+						<p>Business idea competitions to encourage and recognize innovative thinking.</p>
+					</div>
+
+					<div class="service">
+						<a href=""><img src="asset\portfolio-icons\cd-32x32.png" style="padding-bottom: 32px"></a>
+						<h3>Creative Design</h3>
+						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+					</div>
+
+					<div class="service">
+						<a href=""><img src="asset\portfolio-icons\marketing-32x32.png" style="padding-bottom: 32px"></a>
+						<h3>Marketing & Publicity</h3>
+						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+					</div>
+
+					<div class="service">
+						<a href=""><i class="fas fa-pen-alt"></i></a>
+						<h3>Content Writing</h3>
+						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		
+	</section>
+
+	<!-- <section id ="team">
+		<div>
+			<h2>Team</h2>
+			<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+
+
+
+		</div>
+		
+	</section> -->
+
+	<section id ="contact">
+		<div>
+			<h2>Get In Touch</h2>
+			<p>Feel free to contact us in case of any queries</p>
+
+			<div class="container" style="text-align: center;">
+  				<form action="" method="POST">
+   				    
+    		        <input type="text" id="fname" name="name" placeholder="Name">
+                    
+                    <input type="text" id="lname" name="email" placeholder="Email">
+
+
+
+                    <textarea id="message" name="message" placeholder="Leave your Message here" style="height:200px"></textarea>
+
+                    <input type="submit" value="Submit"  onsubmit="alert('Thank You... ');">
+
+                </form>
+            </div>
+        </div>
+    </section>
+
+	<script type="text/javascript">
+		function toggle()
+		{
+			var header = document.getElementById("header")
+			header.classList.toggle('active')
+		}
+		function alertMessage(){
+        alert("Thank You...  ");
+    }
+	</script>
+
+
+
+	<footer class="footer-distributed">
+ 
+		<div class="footer-left">
+ 
+		<!-- <h3>E-Club</h3> -->
+ 
+		<p class="footer-company-name">E-Club &copy; 2019-2020</p>
+
+		</div>
+ 
+		<div class="footer-center">
+ 
+		<div>
+		<i class="fa fa-map-marker"></i>
+		<p><span>Administration Bhavan</span>
+		<span>Gitam University</span> Vizag, India</p>
+		</div>
+ 
+		<div>
+		<i class="fa fa-envelope"></i>
+		<p><a href="mailto:eclubvdc@gmail.com">eclubvdc@gmail.com</a></p>
+		</div>
+ 
+		</div>
+ 
+		<div class="footer-right">
+ 
+		<p class="footer-company-about">
+		<span>E-Club </span>
+	Where passion fuels Potential!&#9889;
+		</p>
+ 
+		<div class="footer-icons">
+ 
+		<a href="https://www.instagram.com/eclub_gitamvizag/"><i class="fab fa-instagram"></i></a>
+		<a href="https://www.youtube.com/channel/UCbbyAivDuq1HqivlQZp8evw"><i class="fab fa-youtube"></i></a>
+		<a href="#"><i class="fab fa-linkedin-in"></i></a>
+		
+ 
+		</div>
+ 
+		</div>
+ 
+		</footer>
+
 </body>
 </html>

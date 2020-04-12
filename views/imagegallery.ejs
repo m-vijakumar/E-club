@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Our Team</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<script src="https://kit.fontawesome.com/baec0ddc1f.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="css\gallery-grid.css">
+    <link rel="shortcut icon" type="img/png" href="asset\logos\logo_only.png">
+</head>
+<style>
+  iframe{
+    max-width: 100%;
+  }
+</style>
+<body>
+	<header id= "header">
+		<a href="/" class="logo">E-Club</a>
+		<ul>
+			<li><a href="/"  onclick="toggle()">HOME</a></li>
+			<li><a href="/#about" onclick="toggle()">About</a></li>
+			<li><a href="/#events" onclick="toggle()">Events</a></li>
+			<li><a href="/imagegallery" class="active" onclick="toggle()">Gallery</a></li>
+			<li><a href="/#portfolio" onclick="toggle()">Portfolio</a></li>
+			<li><a href="/team"   onclick="toggle()">Team</a></li>
+			<li><a href="/#contact" onclick="toggle()">Contact Us</a></li>
+		</ul>
+		<div class="toggle" onclick="toggle()"></div>
+	</header>
+
+
+  <div class="container-fluid " style="padding-top: 120px">
+
+          <div class="jumbotron j " >
+            <h1 style="padding-left: 10%;"><i class="fa fa-camera-retro"></i> Gallery </h1>
+          </div>
+          <% if(video1){ %>
+          <section id ="about">
+            <div style="display: flex; padding: 50px; align-items: center;flex-wrap: wrap;">
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="embed-responsive embed-responsive-16by9">
+                  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<%=  typeof video1 == 'undefined' ? '' : video1 %>" allowfullscreen></iframe>
+                </div>
+              </div>
+              <div style="padding: 15px; align-items: center;" class="col-md-6 col-sm-12 col-xs-12">
+                <h6>At E-Club under the aegis of VDC we support and encourage individual ability and creativity.</h6>  
+              </div>
+              
+            </div>
+          </section>
+          <%}%>
+          <% if(video2){ %>
+          <section id ="about">
+            <div style="display: flex; padding: 50px; align-items: center;flex-wrap: wrap;">
+              <div style="padding: 15px; align-items: center;" class="col-md-6 col-sm-12 col-xs-12">
+                <h6>At E-Club under the aegis of VDC we support and encourage individual ability and creativity.</h6>  
+              </div>
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="embed-responsive embed-responsive-16by9">
+                  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<%=  typeof video2 == 'undefined' ? '' : video2 %>" allowfullscreen></iframe>
+                </div>
+              </div>
+              
+              
+            </div>
+          </section>
+          <%}%>
+          <% if(photos){ %>
+          <section>
+            <div class="container-2">
+
+              <% for(var i=0; i <photos.length ; i++) { %> 
+                  
+                      <div class="box-n">
+                          <img src="\myuploads\<%= photos[i].path %>" />
+                      </div>
+                   <%} %>
+
+                   <%}%>
+              </div>
+          </section>
+  </div>
+
+
+<script type="text/javascript">
+    function toggle()
+    {
+      var header = document.getElementById("header")
+      header.classList.toggle('active')
+    }
+  </script>
+  
+  <footer class="footer-distributed">
+ 
+    <div class="footer-left">
+ 
+    <!-- <h3>E-Club</h3> -->
+ 
+    <p class="footer-company-name">E-Club &copy; 2019-2020</p>
+
+    </div>
+ 
+    <div class="footer-center">
+ 
+    <div>
+    <i class="fa fa-map-marker"></i>
+    <p><span>Administration Bhavan</span>
+    <span>Gitam University</span> Vizag, India</p>
+    </div>
+ 
+    <div>
+    <i class="fa fa-envelope"></i>
+    <p><a href="mailto:eclubvdc@gmail.com">eclubvdc@gmail.com</a></p>
+    </div>
+ 
+    </div>
+ 
+    <div class="footer-right">
+ 
+    <p class="footer-company-about">
+    <span>E-Club </span>
+  Where passion fuels Potential!&#9889;
+    </p>
+ 
+    <div class="footer-icons">
+ 
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-youtube"></i></a>
+    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    
+ 
+    </div>
+ 
+    </div>
+ 
+    </footer>
+
+</body>
+</html>
+

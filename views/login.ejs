@@ -32,13 +32,17 @@
     
             <tr>
                 <td>password : </td><td><input type="password" name="password" /></td>
+			</tr>
+			<tr >
+    
+                <td colspan="2" align="center"><br><%=  typeof message == "undefined" ? '' : message %> </td>
             </tr>
             <tr >
     
-                <td colspan="2" align="center"><br><input type="submit" name="submit" />     &nbsp;&nbsp;&nbsp;   <input type="submit" name="submit"  value="  reset  " /></td>
+                <td colspan="2" align="center"><br><input type="submit" name="submit" /> </td>
             </tr>
             <tr >
-                <td colspan="2" align="center" textalign="center"><br><p >NewUser?<a  href="#">SignUp</a></p></td>
+                <td colspan="2" align="center" textalign="center"><br><p >NewUser ?<a  href="/api/admin/register"> SignUp</a></p></td>
             </tr>
         </table>
     </form>

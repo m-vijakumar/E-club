@@ -5,32 +5,148 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+
+    /* body{
+        margin-top: 2px;
+    } */
+    #events { list-style-type: none; margin: 0; padding: 0;font-size: large; }
+        #events li { padding: 20px 10px; background: #31fd97d7; }
+        #events li:nth-child(odd) { background: rgba(162, 255, 193, 0.884); }
+
+    #userlist { list-style-type: none; margin: 0; padding: 0; }
+        #userlist li { padding: 10px 10px; background: #31fd97d7; }
+        #userlist li:nth-child(odd) { background: rgba(162, 255, 193, 0.884); }
+
+    .btnstyle{
+    background-color: #1C1D1C;
+    color: #fff;
+    border:none;
+    padding : 5px 10px;
+    border-radius : 50%;
+    cursor :pointer;
+    float:right;
+}
+    .btnevent{
+    background-color: #1C1D1C;
+    color: #fff;
+    border:none;
+    padding : 10px 10px;
+    border-radius : 10%;
+    cursor :pointer;
+    /* float:right; */
+    margin-left: 40%;
+}
+    .btnlogout{
+    background-color: rgb(206, 1, 1);
+    color: rgb(255, 214, 214);
+    border:none;
+    padding : 10px 10px;
+    border-radius : 10%;
+    cursor :pointer;
+    /* float:right; */
+    margin-right: 10%;
+    margin-left: 10%;
+}
+    .btnreview{
+    background-color: rgb(29, 81, 179);
+    color: #fff;
+    border:none;
+    padding : 10px 10px;
+    border-radius : 10%;
+    cursor :pointer;
+    /* float:right; */
+    margin-left: 10%;
+}
+.save-div{
+ 
+ width: 100%;
+ height: 100%;
+ background-color: rgba(0, 0, 0, 0.7);
+ position: absolute;
+ top:0;
+ left: 0;
+ display: none;
+ justify-content: center;
+
+}
+
+.outer-div{
+    margin-top: 50px;
+}
+.inner-div{
+    background-color: #fff;
+    padding: 25px;
+
+}
+.save-div-change{
+ width: 100%;
+ height: 100%;
+ background-color: rgba(0, 0, 0, 0.7);
+ position: absolute;
+ top:0;
+ left: 0;
+ display: flex;
+ justify-content: center;
+ /* align-items: center; */
+ 
+}
+</style>
 <body>
+    <div style="text-align: right;">
+        <a href="/"><button class="btnreview">Review</button></a>
+    <a href="/api/admin/logout"><button class="btnlogout" >Logout</button></a>
+</div>
+    
     <h1>Update Videos Linkes</h1>
-    <form method="post" action="">
-        video1:<input type="text" name="video1">
-        video2:<input type="text" name="video1">
-    </form>
+    
+    
+        video1:<input type="text" name="video1" disabled size="50" value="<%= video1 %>"><br><br>
+        video2:<input type="text" name="video2" disabled size="50" value="<%= video2 %>"><br><br>
+        <button onclick="kk()">Edit</button>
+    
+
+    <div id="save" class="save-div">
+        <div class="outer-div">
+            
+                <h3 onclick="kkRemove()" style="text-align: right; color: rgb(255, 255, 255);cursor: pointer;"> X </h3>
+            
+        <div class="inner-div">
+            <form method="post" action="/api/admin/update/videos">
+                video1:<input type="text" name="video1"  size="50" value="<%= video1 %>"><br><br>
+                video2:<input type="text" name="video2"  size="50" value="<%= video2 %>"><br><br>
+                <input type="submit" value="submit">
+            </form>
+        </div>
+        </div>
+    </div>
 
     <h1>Update Events</h1>
-    <form method="post" action="">
-        EventTitle:<input type="text" name="video1">
-        EventDescription:<input type="text" name="video1">
-        EventDate:<input type="date" name="video1">
+    <form method="post" action="/api/admin/update/events">
+        EventTitle:<input type="text" name="title"><br><br>
+        EventDescription:<textarea rows="2" cols="50" name="description"></textarea><br><br>
+        EventDate:<input type="date" name="date">
+        <br><br>
+        <input type="submit" value="Add Event" /><br><br>
     </form>
-
+    <ul id="events">
     <% for(var i=0; i <events.length ; i++) { %>
-        <%= events[i] %><br>
-        <form action="/api/admin/update/delete/event" method="post">
-            <input type="hidden" name="eventId" value="<%= events[i]._id %>" />
-            <input type="submit" value="delete" />
-        </form>
+        <li>
+        <span style="font:bold;">EventTitle:</span>&nbsp;&nbsp;&nbsp;&nbsp;<%= events[i].eventTitle %><br>
+            <span style="font:bold;" >EventDescription:</span>&nbsp;&nbsp;&nbsp;&nbsp;<%= events[i].eventDescription %><br>
+            <span style="font:bold;">EventDate:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= events[i].eventDate %><br><br>
+            <form action="/api/admin/update/delete/event" method="post" onsubmit="return confirm('Do you really want to delete this Event ?');">
+                <input type="hidden" name="eventId" value="<%= events[i]._id %>" />
+                <input type="submit" value="delete" class="btnevent" />
+            </form>
+        </li>
     <%}%>
+    </ul>
 
 
     <h1>Update Photos</h1>
     <form method="post" action="/api/admin/update/photos" enctype="multipart/form-data">
-        <input type="file" name="image" >
+        <input type="file" name="image"  >
         <input type="submit" value="ADDPhoto" />
     </form>
 
@@ -40,12 +156,46 @@
         <!-- <%= photos[i].path %> -->
         
         <img src="\myuploads\<%= photos[i].path %>" height="30%" width="30%"/>
-        <form action="/api/admin/update/delete/photo" method="post">
+        <form action="/api/admin/update/delete/photo" method="post" onsubmit="return confirm('Do you really want to delete Photo ?');">
             <input type="hidden" name="imageName" value="<%= photos[i].path %>" />
             <input type="submit" value="delete" />
         </form>
         <%}%>
-
-    
+        
+        <% if(admin) { %>
+            <h3>Remove Users</h3>
+            <br>
+            <ul id="userlist">
+                <% for(var i=0; i <users.length ; i++) { %>
+                <li>
+                    <%= users[i].username %>
+                    <span style="float: right;">
+                        <form action="/api/admin/update/delete/user" method="post" onsubmit="return alertMessage()">
+                            <input type="hidden" name="userid" value="<%= users[i].id %>"  />
+                            <input type="submit" value="x" class="btnstyle" />
+                        </form>
+                    </span>
+                </li>
+                <%}%>
+                
+            </ul>
+             <% } %>
+             <br>
+           
 </body>
+<script type="text/javascript">
+   function alertMessage(){
+       return confirm("sure Do You Want To Delete");
+    }
+    function kk(){
+        var element = document.getElementById("save");
+  element.classList.remove("save-div");
+  element.classList.add("save-div-change");
+    }
+    function kkRemove(){
+        var element = document.getElementById("save");
+  element.classList.add("save-div");
+  element.classList.remove("save-div-change");
+    }
+</script>
 </html>

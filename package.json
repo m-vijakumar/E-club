@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
@@ -21,7 +21,7 @@
     "mongoose": "^5.9.2",
     "multer": "^1.4.2",
     "nodemailer": "^6.4.4",
-    "nodemailer-sendgrid-transport": "^0.2.0",
+    "nodemon": "^2.0.3",
     "path": "^0.12.7",
     "random-number": "0.0.9",
     "uuid": "^7.0.2"
