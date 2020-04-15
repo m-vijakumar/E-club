@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+       .btnreview{
+    background-color: rgb(46, 104, 212);
+    color: rgb(223, 233, 243);
+    font-size: x-large;
+    border:none;
+    padding : 10px 15px;
+    border-radius : 10%;
+    cursor :pointer;
+    /* float:right; */
+    margin-left: 10%;
+}
+</style>
+<body>
+<center>
+    <h2>
+        <%=  typeof err == "undefined" ? '' : err %>
+    <%=  typeof message == "undefined" ? '' : message %>
+    </h2>
+
+    <a href="/#contact"><button class="btnreview" >Home</button></a>
+</center>
+</body>
+</html>

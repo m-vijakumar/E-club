@@ -1,5 +1,6 @@
 
 const Uploads = require("../models/upload");
+const User = require("../models/users");
 const jsonwt = require("jsonwebtoken")
 const tokenKey = require("../setup/connect").TOKEN_KEY
 const multer = require("multer");
@@ -16,7 +17,25 @@ var storage = multer.diskStorage({
     }
   });
   
+  exports.imageValidCredentials = (req,res,next) =>{
 
+    req.assert("image", "Please Select the image").notEmpty();
+    
+
+    req.getValidationResult(req,res,next)
+    .then((result)=>{
+      console.log(result.array())
+        if(!result.isEmpty()){
+            // result.useFirstErrorOnly(req).array({useFirstErrorOnly:true});
+            return res.status(400).render('updateinfo',{
+              // result.useFirstErrorOnly();
+                error : 'invalid inputs',
+                message : result.array()[0].msg
+            })
+        }
+        next();
+    });
+};
 
 
 exports.updateVideos =async(req,res)=>{
@@ -26,41 +45,39 @@ exports.updateVideos =async(req,res)=>{
     
     let videoData ={video1:video1,video2:video2};  
    
-   await Uploads
-    .findOne({})
-    .then((result)=>{
+  //  await Uploads
+  //   .findOne({})
+  //   .then((result)=>{
         
-        if(!video1){
-            videoData.video1 = result.video1;
-        }
-        if(!video2){
-            videoData.video2 = result.video2;
-            console.log(result.video2)
-        }
-    })
-    .catch((err)=>{
-        return err
-    })
+  //       if(!video1){
+  //           videoData.video1 = result.video1;
+  //       }
+  //       if(!video2){
+  //           videoData.video2 = result.video2;
+  //           console.log(result.video2)
+  //       }
+  //   })
+    // .catch((err)=>{
+    //     return err
+    // })
 
  
 await Uploads
     .updateVideos(videoData)
     .then((r)=>{
         if(r == null){
-            res.json({
+            res.render("updateinfo",{
                 message:r
             })
         }else{
-            res.json({
-                message:r
-            })
+            res.redirect("/api/admin/update");
         }
     })
     .catch((err)=>{
         console.log(err)
-        return res.json({
+        return res.render('updateinfo',{
             error:true,
-            meg:"error in find"
+            message:"internall error... "
         })
     })
 
@@ -69,10 +86,12 @@ exports.deleteEvent = async(req,res)=>{
 
   await Uploads.findOneAndUpdate({},{$pull:{events:{_id:req.body.eventId}}})
   .then(async(r) =>{
-    res.send("done")
+    res.redirect("/api/admin/update")
   })
   .catch(err=>{
-    res.send(err)
+    res.render('updateinfo',{
+      message:"issue in delete"
+    })
   })
 }
 
@@ -83,22 +102,20 @@ exports.uploadEvents = async(req,res)=>{
    let  eventDate=req.body.date;
     
    if(!eventDate || !eventDescription || !eventTitle){
-    return res.json({
+    return res.render('updateinfo',{
         error:true,
-        meassage:'invalid inputs'
+        message:'invalid inputs'
     })
    }
 
    const r=await Uploads.updateEvents(eventTitle, eventDescription,eventDate)
 
 	 if(r == null){
-		 res.json({
+		 res.render('updateinfo',{
 			 message:'Event not Added'
 		 })
 	 }else{
-		res.json({
-			message:r
-		})
+		res.redirect("/api/admin/update")
      }
   
 
@@ -108,13 +125,26 @@ exports.uploadEvents = async(req,res)=>{
 exports.updatePhotos = async(req,res)=>{
     
   var upload = multer({ 
-      storage: storage 
-  
+      storage: storage,
+      fileFilter: (req,file,cb)=>{
+        checkFileType(file,cb)
+      }
     }).single('image');
 
+    checkFileType = (file,cb)=>{
+      const filetypes =/jpeg|jpg|png|gif/;
+      const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
+      const mimetype = filetypes.test(file.mimetype);
+
+      if(mimetype && extname){
+        return cb(null,true);
+      }else{
+        return cb("please Check The File")
+      }
+    }
     await upload(req, res, (err) =>{
       if (err) {
-        res.status(400).send({
+       return res.status(400).send({
           error: true,
           msg: err
         });
@@ -123,7 +153,9 @@ exports.updatePhotos = async(req,res)=>{
           var imagepath = `${req.file.filename}`;
         }
         catch(err){
-          res.send('file error')
+         return  res.render("updateinfo",{
+           message:err
+         })
         }
          Uploads.updatePhotos(imagepath)
               
@@ -132,17 +164,17 @@ exports.updatePhotos = async(req,res)=>{
                  return await fs.unlink(`./public/myuploads/${imagepath}`,(err)=>{
 
                     if(err) console.log(err)
-                    else return res.send("image not added");  
+                    else return res.render('updateinfo',{
+                      message:"image not added"});  
                   })
                 }
                 console.log(r + "wefaerfawre")
-                return res.status(400).json({
-                  error:false,
-                  meassage:'Photo Added Successfully' 
-                })
+                return res.status(400).redirect("/api/admin/update")
               })
               .catch(err =>{
-                res.send(err)
+                res.render("updateinfo",{
+                  message:err
+                })
               })
 
         
@@ -156,31 +188,39 @@ exports.updatePhotos = async(req,res)=>{
 
 exports.getUploadPage = async(req,res)=>{
 
-  jsonwt.verify(req.cookies.auth_t, ekey, async(err, user1) => {
-    if(err){
-        res.send("internal error");
-       console.log(err)
-    }else{
 
+  var users =[];
       await Uploads
       .findOne({})
       .then(async(r)=>{
          //  r.events
-         console.log(r.video1)
-
-          res.render("upload",{
-              video1:r.video1,
-              video2:r.video2,
-              photos:r.photos,
-              events:r.events
-          })
+        const user = jsonwt.decode(req.cookies.auth_t, tokenKey)
+        
+         console.log(user)
+          if(user.admin){
+            await User.find({admin :false}, {password: 0, _v: 0})
+                      .then((result)=>{
+                        result.forEach(element => {
+                          let b ={id:element._id,username:element.username}
+                          users.push(b);
+                        });
+                      })
+                      
+          }
+          console.log(users)
+         var data ={
+          video1:r.video1,
+          video2:r.video2,
+          photos:r.photos,
+          events:r.events,
+          admin:user.admin,
+          users:users
+      }
+          res.render("upload",data)
       })
       .catch( err =>{
         res.send("err")
       })
-    }
-         
-})
 
 }
 
@@ -201,4 +241,12 @@ exports.deletePhotos = async(req,res)=>{
     })
   })
   
+}
+
+exports.getEvents = (req,res)=>{
+  Uploads.getEventList()
+  .then(r=>{
+    console.log(r)
+    res.send(r)
+  })
 }

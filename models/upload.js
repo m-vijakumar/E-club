@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const uploadSchema = new mongoose.Schema({
-    video1:{type: String , default:'sample'},
+    video1:{type: String , default:null},
     video2:{type: String , default: null},
     
     photos :[{
@@ -82,5 +82,52 @@ uploadSchema.statics.updateEvents= async(eventTitle,eventDescription,eventDate)=
                 return err;
             })
 
+}
+
+uploadSchema.statics.getEventList= async() =>{
+
+    var past =[];
+    var future =[];
+   return await Uploads.findOne({})
+    .then((result)=>{
+        result.events.forEach(element => {
+              let  date1 = element.eventDate.toString();
+              let date2 = date1.split(" ");
+
+               let date = ""+date2[0]+" "+date2[1]+" "+date2[2]+" "+date2[3];
+
+
+            var x= {
+                eventDescription:element.eventDescription,
+                eventTitle:element.eventTitle,
+                eventDate:date
+            }
+
+            if(element.eventDate < Date.now() ){
+                past.push(x)
+                
+
+                
+                console.log('past    '+x)
+            }else{
+                future.push(x)
+                console.log('future     '+x)
+            }
+
+        });
+        var events = {
+            past :past,
+            future:future
+        }
+        return events ;
+    })
+    .catch((err)=>{
+        console.log(err)
+        var events = {
+            past :past,
+            future:future
+        }
+        return events ;
+    })
 }
  module.exports = Uploads = mongoose.model('uploads',uploadSchema);

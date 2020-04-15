@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+
+    #events { list-style-type: none; margin: 0; padding: 0;font-size: large; }
+    #events li { padding: 20px 10px; background: #31fd97d7; }
+    #events li:nth-child(odd) { background: rgba(162, 255, 193, 0.884); }
+
+    .btnevent{
+    background-color: #1C1D1C;
+    color: #fff;
+    border:none;
+    padding : 10px 10px;
+    border-radius : 10%;
+    cursor :pointer;
+    /* float:right; */
+    margin-left: 40%;
+
+}
+.btnlogout{
+    background-color: rgb(206, 1, 1);
+    color: rgb(255, 214, 214);
+    border:none;
+    padding : 10px 10px;
+    border-radius : 10%;
+    cursor :pointer;
+    /* float:right; */
+    margin-right: 10%;
+    margin-left: 10%;
+}
+    .btnreview{
+    background-color: rgb(29, 81, 179);
+    color: #fff;
+    border:none;
+    padding : 10px 10px;
+    border-radius : 10%;
+    cursor :pointer;
+    /* float:right; */
+    margin-left: 10%;
+}
+</style>
+<body>
+    <div style="text-align: right;">
+        <a href="/api/admin/update"><button class="btnreview">Home</button></a>
+        
+    <a href="/api/admin/logout"><button class="btnlogout" >Logout</button></a>
+</div>
+    
+    <h1>Feedbacks</h1><br><br>
+    <ul id="events">
+        <% if(feedbacks){ %>
+        <% if(feedbacks.length >= 0 ){ %>
+        <% for(var i=0; i <feedbacks.length ; i++) { %>
+            <li>
+            <span style="font:bold;">userName :</span>&nbsp;&nbsp;&nbsp;&nbsp;<%= feedbacks[i].name %><br>
+                <span style="font:bold;" >UserEmail:</span>&nbsp;&nbsp;&nbsp;&nbsp;<%= feedbacks[i].emailId %><br>
+                <span style="font:bold;">Message:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= feedbacks[i].message %><br><br>
+                <form action="/api/subscriber/deletefeedback" method="post" onsubmit="return confirm('Do you really want to delete this Event ?');">
+                    <input type="hidden" name="feedbackId" value="<%= feedbacks[i]._id %>" />
+                    <input type="submit" value="completed" class="btnevent" />
+                </form>
+            </li>
+        <%}%>
+        <%}else{%>
+            <center>
+                <h2>No Feedbacks Found</h2>
+            </center>
+            <%}%>
+            <%}else{%>
+                <center>
+                    <h2>ERROR</h2>
+                </center>
+                <%}%>
+        </ul>
+</body>
+</html>

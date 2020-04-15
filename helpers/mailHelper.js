@@ -1,9 +1,11 @@
  
  const nodemailer = require("nodemailer")
 
- exports.sendMail = (user,host)=>{
 
-  var transporter = nodemailer.createTransport({
+
+ exports.sendMail = async(user,host)=>{
+
+  var transporter =  nodemailer.createTransport({
     host : 'smtp.gmail.com',
     port : 587,
     secure :false,
@@ -12,27 +14,26 @@
       pass: process.env.Nodemailer_Password
       // pass: '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'
     }
-  });
+  }); 
   
   var mailOptions = {
-    from: 'gitam.eclub@gmail.com' ,
-    to: '121710307020@gitam.in',
+    from: 'gitam.eclub@gmail.com',
+    to: user.admin,
     subject: 'E-club Email Verfication',
-    text: 'Welcome to EClub Gitam  this mail is to comform your email addresss \nhttp:\/\/' + host + '\/api/admin/emailverification\/?userId='+ user.id +'&tokenId=' + user.token + '\n please verify your email account \n Thankyou...'
+    text: 'Hii ' +user.email +' is Requesting  to Join in EClub Gitam and to comform is this User Please Click On this Link  \nhttp:\/\/' + host + '\/api/admin/emailverification\/?userId='+ user.id +'&tokenId=' + user.token + '\n please verify your email account \n Thankyou...'
   };
   
-  transporter.sendMail(mailOptions, (error, info)=>{
-    if (error) {
-      console.log(error);
-      return null 
-      // res.send("error")
-    } else {
-      console.log('Email sent: ' + info.response);
-      return done
-    }
-  });
-
-
+   return await transporter.sendMail(mailOptions)
+                .then( (info)=>{
+                 
+                    console.log('Email sent: ' + info.response);
+                    return  true
+                  
+                })
+                .catch((err)=>{
+                  console.log('Email error: ' + err);
+                    return  false
+                })
  }
 
  

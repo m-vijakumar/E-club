@@ -35,8 +35,9 @@
           <div class="jumbotron j " >
             <h1 style="padding-left: 10%;"><i class="fa fa-camera-retro"></i> Gallery </h1>
           </div>
-          <% if(video1){ %>
+          
           <section id ="about">
+            <% if(video1){ %>
             <div style="display: flex; padding: 50px; align-items: center;flex-wrap: wrap;">
               <div class="col-md-6 col-sm-12 col-xs-12">
                 <div class="embed-responsive embed-responsive-16by9">
@@ -48,10 +49,12 @@
               </div>
               
             </div>
-          </section>
           <%}%>
-          <% if(video2){ %>
+
+          </section>
+          
           <section id ="about">
+            <% if(video2){ %>
             <div style="display: flex; padding: 50px; align-items: center;flex-wrap: wrap;">
               <div style="padding: 15px; align-items: center;" class="col-md-6 col-sm-12 col-xs-12">
                 <h6>At E-Club under the aegis of VDC we support and encourage individual ability and creativity.</h6>  
@@ -64,8 +67,9 @@
               
               
             </div>
+            <%}%>
           </section>
-          <%}%>
+          
           <% if(photos){ %>
           <section>
             <div class="container-2">
